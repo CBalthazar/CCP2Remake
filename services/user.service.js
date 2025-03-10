@@ -24,6 +24,7 @@ class UserService {
   async loginUser(mail, password) {
     try {
       const user = await this.getUserByMail(mail);
+      console.log(password);
       if (!(await argon2.verify(user.password, password))) {
         throw new Error("login wrong");
       }

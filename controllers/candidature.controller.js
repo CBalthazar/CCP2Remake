@@ -1,4 +1,4 @@
-import CandidatureService from "../services/candidature.service";
+import CandidatureService from "../services/candidature.service.js";
 
 class CandidatureController {
   constructor() {

@@ -22,9 +22,10 @@ class CandidatureRepository {
     let conn;
     try {
       conn = await pool.getConnection();
-      const [candidature] = await conn.query("SELECT Candidatures WHERE id=?", [
-        id,
-      ]);
+      const [candidature] = await conn.query(
+        "SELECT * FROM Candidatures WHERE id=?",
+        [id]
+      );
       if (!candidature) throw new Error("Candidature inexistante");
       return candidature;
     } catch (err) {
