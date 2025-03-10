@@ -69,7 +69,7 @@ class UserRepository {
     try {
       conn = await pool.getConnection();
       await conn.query(
-        "UPDATE Users set firstname=?, name=?, mail=?, password=? WHERE id=?",
+        "UPDATE Users SET firstname=?, name=?, mail=?, password=? WHERE id=?",
         [firstname, name, mail, hash, id]
       );
       return await this.getUserById(id);

@@ -55,11 +55,10 @@ class MissionRepository {
     let conn;
     try {
       conn = await pool.getConnection();
-      await conn.query("UPDATE Missions SET id=?, title=?, description=?", [
-        id,
-        title,
-        description,
-      ]);
+      await conn.query(
+        "UPDATE Missions SET title=?, description=? WHERE id=?",
+        [title, description, id]
+      );
       return await this.getMissionById(id);
     } catch (err) {
       console.log("repo update mission");

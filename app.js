@@ -4,6 +4,7 @@ import "dotenv/config";
 import "./seed.js";
 import userRouter from "./routes/user.routes.js";
 import missionRouter from "./routes/mission.routes.js";
+import candidatureRouter from "./routes/candidature.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -13,6 +14,7 @@ app.use(cookieParser());
 
 app.use("/user", userRouter);
 app.use("/mission", missionRouter);
+app.use("/candidature", candidatureRouter);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
