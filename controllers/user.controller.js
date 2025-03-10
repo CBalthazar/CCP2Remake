@@ -100,7 +100,6 @@ class UserController {
 
   async deleteUser(req, res, next) {
     try {
-      console.log(req.userId);
       await this.userService.deleteUser(req.userId);
       res.status(200).json({ message: "user deleted" });
     } catch (err) {
