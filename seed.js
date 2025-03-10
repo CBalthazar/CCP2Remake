@@ -26,7 +26,8 @@ const seed = async () => {
         firstname VARCHAR(64) NOT NULL,
         name VARCHAR(64) NOT NULL,
         mail VARCHAR(64) NOT NULL,
-        password VARCHAR(128) NOT NULL
+        password VARCHAR(128) NOT NULL,
+        role ENUM('benevole', 'association') DEFAULT "benevole"
         );`);
 
       await conn.query(`
@@ -41,7 +42,7 @@ const seed = async () => {
         title VARCHAR(64) NOT NULL,
         description TEXT,
         idAssociation UUID,
-        FOREIGN KEY (idAssociation) REFERENCES Associations(id)
+        FOREIGN KEY (idAssociation) REFERENCES Users(id)
         );`);
 
       await conn.query(`

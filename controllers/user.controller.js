@@ -8,12 +8,13 @@ class UserController {
 
   async registerUser(req, res, next) {
     try {
-      const { firstname, name, mail, password } = req.body;
+      const { firstname, name, mail, password, role } = req.body;
       const user = await this.userService.registerUser(
         firstname,
         name,
         mail,
-        password
+        password,
+        role
       );
 
       delete user.password;

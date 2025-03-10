@@ -1,4 +1,4 @@
-import pool from "../config/db";
+import pool from "../config/db.js";
 import { v4 } from "uuid";
 
 class MissionRepository {
@@ -8,7 +8,7 @@ class MissionRepository {
     try {
       conn = await pool.getConnection();
       const [mission] = await conn.query(
-        "INSERT INTO Missions VALUES (?,?,?,?)",
+        "INSERT INTO Missions VALUES (?,?,?,?) RETURNING *",
         [id, title, description, idAssociation]
       );
       return mission;
@@ -51,14 +51,15 @@ class MissionRepository {
     }
   }
 
-  async updateMission(id, title, description, idAssociation) {
+  async updateMission(id, title, description) {
     let conn;
     try {
       conn = await pool.getConnection();
-      await conn.query(
-        "UPDATE Missions SET id=?, title=?, description=?, idAssociation=?",
-        [id, title, description, idAssociation]
-      );
+      await conn.query("UPDATE Missions SET id=?, title=?, description=?", [
+        id,
+        title,
+        description,
+      ]);
       return await this.getMissionById(id);
     } catch (err) {
       console.log("repo update mission");
@@ -72,7 +73,7 @@ class MissionRepository {
     let conn;
     try {
       conn = await pool.getConnection();
-      await conn.query("DELETE Missions WHERE id=?", [id]);
+      await conn.query("DELETE FROM Missions WHERE id=?", [id]);
     } catch (err) {
       console.log("repo delete mission");
       console.error(err);

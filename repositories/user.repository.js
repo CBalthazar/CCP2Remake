@@ -2,14 +2,14 @@ import pool from "../config/db.js";
 import { v4 } from "uuid";
 
 class UserRepository {
-  async registerUser(firstname, name, mail, hash) {
+  async registerUser(firstname, name, mail, hash, role) {
     const id = v4();
     let conn;
     try {
       conn = await pool.getConnection();
       const [user] = await conn.query(
-        "INSERT INTO Users VALUES (?,?,?,?,?) RETURNING *",
-        [id, firstname, name, mail, hash]
+        "INSERT INTO Users VALUES (?,?,?,?,?,?) RETURNING *",
+        [id, firstname, name, mail, hash, role]
       );
       return user;
     } catch (err) {
@@ -85,7 +85,7 @@ class UserRepository {
     let conn;
     try {
       conn = await pool.getConnection();
-      await conn.query("DELETE Users WHERE id=?", [id]);
+      await conn.query("DELETE FROM Users WHERE id=?", [id]);
     } catch (err) {
       console.log("repo delete user");
       console.error(err);

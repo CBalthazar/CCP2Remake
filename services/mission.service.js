@@ -1,4 +1,4 @@
-import MissionRepository from "../repositories/mission.repository";
+import MissionRepository from "../repositories/mission.repository.js";
 
 class MissionService {
   constructor() {

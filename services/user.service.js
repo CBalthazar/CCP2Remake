@@ -6,14 +6,15 @@ class UserService {
     this.userRepository = new UserRepository();
   }
 
-  async registerUser(firstname, name, mail, password) {
+  async registerUser(firstname, name, mail, password, role) {
     try {
       const hash = await argon2.hash(password);
       return await this.userRepository.registerUser(
         firstname,
         name,
         mail,
-        hash
+        hash,
+        role
       );
     } catch (err) {
       console.error("service createUser ");

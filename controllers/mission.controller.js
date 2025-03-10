@@ -1,5 +1,4 @@
-import MissionService from "../services/mission.service";
-import UserService from "../services/user.service";
+import MissionService from "../services/mission.service.js";
 
 class MissionController {
   constructor() {
@@ -9,7 +8,7 @@ class MissionController {
   async createMission(req, res, next) {
     try {
       const { title, description, idAssociation } = req.body;
-      const mission = await this.missionService(
+      const mission = await this.missionService.createMission(
         title,
         description,
         idAssociation
@@ -48,12 +47,12 @@ class MissionController {
 
   async updateMission(req, res, next) {
     try {
-      const { id, title, description, idAssociation } = req.body;
+      const { title, description } = req.body;
+      const id = req.params.id;
       const updated = await this.missionService.updateMission(
         id,
         title,
-        description,
-        idAssociation
+        description
       );
 
       res.status(200).json(updated);
