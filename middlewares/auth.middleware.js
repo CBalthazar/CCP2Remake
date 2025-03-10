@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import UserService from "../services/user.service.js";
+import { DataNotFound } from "../errors/server.exceptions.js";
 
 async function authToken(req, res, next) {
   try {
@@ -16,7 +17,7 @@ async function authToken(req, res, next) {
         next();
       } catch (err) {
         console.log("auth middleware fetch user");
-        console.error(err);
+        next(new DataNotFound("User"));
       }
     });
   } catch (err) {

@@ -1,10 +1,12 @@
+import { NotAuthorException } from "../errors/server.exceptions.js";
+
 async function isAuthor(req, res, next) {
   try {
-    if (req.userId == req.params.id) throw new Error("userId");
+    if (req.userId == req.params.id) throw new NotAuthorException();
     next();
   } catch (err) {
     console.log("middleware author");
-    console.error(err);
+    next(err);
   }
 }
 

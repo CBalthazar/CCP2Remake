@@ -1,5 +1,8 @@
 import pool from "../config/db.js";
 import { v4 } from "uuid";
+import { DataNotFound } from "../errors/server.exceptions.js";
+import { SqlError } from "mariadb";
+import { MissingParameter } from "../errors/database.exception.js";
 
 class UserRepository {
   async registerUser(firstname, name, mail, hash, role) {
@@ -14,7 +17,14 @@ class UserRepository {
       return user;
     } catch (err) {
       console.log("repo create user");
-      console.error(err);
+      if (err instanceof SqlError) {
+        switch (err.no) {
+          case 1018:
+            throw new MissingParameter();
+          default:
+            throw new UnexpectedDatabaseError();
+        }
+      }
     } finally {
       if (conn) conn.release();
     }
@@ -27,11 +37,11 @@ class UserRepository {
       const [user] = await conn.query("SELECT * FROM Users WHERE mail=?", [
         mail,
       ]);
-      if (!user) throw new Error("user inexistant");
+      if (!user) throw new DataNotFound("User");
       return user;
     } catch (err) {
       console.log("repo get user by id");
-      console.error(err);
+      next(err);
     } finally {
       if (conn) conn.release();
     }
@@ -41,7 +51,7 @@ class UserRepository {
     try {
       conn = await pool.getConnection();
       const [user] = await conn.query("SELECT * FROM Users WHERE id=?", [id]);
-      if (!user) throw new Error("user inexistant");
+      if (!user) throw new DataNotFound("User");
       return user;
     } catch (err) {
       console.log("repo get user by id");

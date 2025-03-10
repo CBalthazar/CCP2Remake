@@ -1,5 +1,6 @@
 import pool from "../config/db.js";
 import { v4 } from "uuid";
+import { DataNotFound } from "../errors/server.exceptions.js";
 
 class CandidatureRepository {
   async createCandidature(idUser, idMission) {
@@ -26,7 +27,7 @@ class CandidatureRepository {
         "SELECT * FROM Candidatures WHERE id=?",
         [id]
       );
-      if (!candidature) throw new Error("Candidature inexistante");
+      if (!candidature) throw new DataNotFound("candidature");
       return candidature;
     } catch (err) {
       console.log("repo get candidature by id");

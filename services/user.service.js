@@ -1,3 +1,4 @@
+import { LoginFailed } from "../errors/server.exceptions.js";
 import UserRepository from "../repositories/user.repository.js";
 import argon2 from "argon2";
 
@@ -22,17 +23,11 @@ class UserService {
   }
 
   async loginUser(mail, password) {
-    try {
-      const user = await this.getUserByMail(mail);
-      console.log(password);
-      if (!(await argon2.verify(user.password, password))) {
-        throw new Error("login wrong");
-      }
-      return user;
-    } catch (err) {
-      console.log("service loginUser");
-      console.error(err);
+    const user = await this.getUserByMail(mail);
+    if (!(await argon2.verify(user.password, password))) {
+      throw new LoginFailed();
     }
+    return user;
   }
 
   async getUserByMail(mail) {

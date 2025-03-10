@@ -1,5 +1,6 @@
 import pool from "../config/db.js";
 import { v4 } from "uuid";
+import { DataNotFound } from "../errors/server.exceptions.js";
 
 class MissionRepository {
   async createMission(title, description, idAssociation) {
@@ -27,7 +28,7 @@ class MissionRepository {
       const [mission] = await conn.query("SELECT * FROM Missions WHERE id=?", [
         id,
       ]);
-      if (!mission) throw new Error("mission inexistante");
+      if (!mission) throw new DataNotFound("Mission");
       return mission;
     } catch (err) {
       console.log("repo get mission by id");
