@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
-import userService from "../instanciation";
+import userService from "../instanciation.js";
 class UserController {
   constructor() {
-    this.userService = new UserService();
+    this.userService = userService;
   }
 
   async registerUser(req, res, next) {
