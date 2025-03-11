@@ -1,7 +1,10 @@
 import express from "express";
-import cookieParser from "cookie-parser";
 import "dotenv/config";
+import cookieParser from "cookie-parser";
 import "./seed.js";
+import cors from "cors";
+import helmet from "helmet";
+import filterRes from "./middlewares/";
 import userRouter from "./routes/user.routes.js";
 import missionRouter from "./routes/mission.routes.js";
 import candidatureRouter from "./routes/candidature.routes.js";
@@ -9,8 +12,13 @@ import candidatureRouter from "./routes/candidature.routes.js";
 const app = express();
 const PORT = 3000;
 
+app.use(cors());
+app.use(helmet());
+
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(filterRes());
 
 app.use("/user", userRouter);
 app.use("/mission", missionRouter);

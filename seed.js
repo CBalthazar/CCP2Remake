@@ -33,7 +33,8 @@ const seed = async () => {
       await conn.query(`
         CREATE TABLE Associations(
         id UUID PRIMARY KEY,
-        name VARCHAR(64) NOT NULL
+        name VARCHAR(64) NOT NULL,
+        description TEXT DEFAULT NULL
         );`);
 
       await conn.query(`
