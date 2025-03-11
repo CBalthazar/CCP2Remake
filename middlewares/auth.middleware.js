@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import UserService from "../services/user.service.js";
+import userService from "../instanciation.js";
 import { DataNotFound } from "../errors/server.exceptions.js";
 
 async function authToken(req, res, next) {
@@ -10,7 +10,6 @@ async function authToken(req, res, next) {
         console.log("auth middleware token verification");
         next(err);
       }
-      const userService = new UserService();
       try {
         const user = await userService.getUserById(decoded.id);
         req.userId = user.id;

@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
-import UserService from "../services/user.service.js";
-
+import userService from "../instanciation";
 class UserController {
   constructor() {
     this.userService = new UserService();
