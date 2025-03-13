@@ -1,10 +1,10 @@
 import express from "express";
-import MissionController from "../controllers/mission.controller.js";
+import MissionController from "../modules/controllers/mission.controller.js";
 import authToken from "../middlewares/auth.middleware.js";
 import isRole from "../middlewares/role.middleware.js";
 import isAuthor from "../middlewares/author.middleware.js";
 import validate from "../validate.js";
-import missionSchema from "../validator.js";
+import { missionSchema } from "../validator.js";
 
 const missionController = new MissionController();
 const router = express.Router();

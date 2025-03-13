@@ -1,5 +1,5 @@
 import express from "express";
-import CandidatureController from "../controllers/candidature.controller.js";
+import CandidatureController from "../modules/controllers/candidature.controller.js";
 import authToken from "../middlewares/auth.middleware.js";
 import isRole from "../middlewares/role.middleware.js";
 import isAuthor from "../middlewares/author.middleware.js";

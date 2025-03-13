@@ -1,8 +1,8 @@
-import pool from "../config/db.js";
+import pool from "../../config/db.js";
 import { v4 } from "uuid";
-import { DataNotFound } from "../errors/server.exceptions.js";
+import { DataNotFound } from "../../errors/server.exceptions.js";
 import { SqlError } from "mariadb";
-import { MissingParameter } from "../errors/database.exception.js";
+import { MissingParameter } from "../../errors/database.exception.js";
 
 class UserRepository {
   async registerUser(firstname, name, mail, hash, role) {
@@ -22,7 +22,7 @@ class UserRepository {
           case 1018:
             throw new MissingParameter();
           default:
-            throw new UnexpectedDatabaseError();
+            throw new Error("unexpected");
         }
       }
     } finally {
@@ -41,7 +41,7 @@ class UserRepository {
       return user;
     } catch (err) {
       console.log("repo get user by id");
-      next(err);
+      throw new Error(err);
     } finally {
       if (conn) conn.release();
     }

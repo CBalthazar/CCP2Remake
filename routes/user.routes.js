@@ -1,5 +1,5 @@
 import express from "express";
-import UserController from "../controllers/user.controller.js";
+import UserController from "../modules/controllers/user.controller.js";
 import authToken from "../middlewares/auth.middleware.js";
 import validate from "../validate.js";
 import { userSchema, authSchema } from "../validator.js";

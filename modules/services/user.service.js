@@ -1,4 +1,4 @@
-import { LoginFailed } from "../errors/server.exceptions.js";
+import { LoginFailed } from "../../errors/server.exceptions.js";
 import UserRepository from "../repositories/user.repository.js";
 import argon2 from "argon2";
 

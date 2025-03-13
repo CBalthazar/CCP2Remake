@@ -30,11 +30,11 @@ const associationSchema = Joi.object({
 const missionSchema = Joi.object({
   title: Joi.string().min(3).max(100).required(),
   description: Joi.string().allow(null, "").max(500),
-  idAssociation: Joi.guid().required(),
+  idAssociation: Joi.string().uuid({ version: "uuidv4" }).required(),
 });
 
 const candidatureSchema = Joi.object({
-  idMission: Joi.guid().required(),
+  idMission: Joi.string().uuid({ version: "uuidv4" }).required(),
 });
 
 export {

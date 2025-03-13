@@ -1,6 +1,6 @@
-import pool from "../config/db.js";
+import pool from "../../config/db.js";
 import { v4 } from "uuid";
-import { DataNotFound } from "../errors/server.exceptions.js";
+import { DataNotFound } from "../../errors/server.exceptions.js";
 
 class CandidatureRepository {
   async createCandidature(idUser, idMission) {

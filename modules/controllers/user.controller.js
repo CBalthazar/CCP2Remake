@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import userService from "../instanciation.js";
+import userService from "../../instanciation.js";
 class UserController {
   constructor() {
     this.userService = userService;
@@ -39,7 +39,6 @@ class UserController {
 
       delete user.mail;
       delete user.password;
-
       res.status(200).json(user);
     } catch (err) {
       console.log("controller login User");
