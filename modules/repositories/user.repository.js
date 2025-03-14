@@ -9,7 +9,7 @@ class UserRepository {
     const id = v4();
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const [user] = await conn.query(
         "INSERT INTO Users VALUES (?,?,?,?,?,?) RETURNING *",
         [id, firstname, name, mail, hash, role]
@@ -33,7 +33,7 @@ class UserRepository {
   async getUserByMail(mail) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const [user] = await conn.query("SELECT * FROM Users WHERE mail=?", [
         mail,
       ]);
@@ -49,7 +49,7 @@ class UserRepository {
   async getUserById(id) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const [user] = await conn.query("SELECT * FROM Users WHERE id=?", [id]);
       if (!user) throw new DataNotFound("User");
       return user;
@@ -64,7 +64,7 @@ class UserRepository {
   async getAllUsers() {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       let users = conn.query("SELECT id, firstname, name FROM Users");
       return users;
     } catch (err) {
@@ -77,7 +77,7 @@ class UserRepository {
   async updateUser(id, firstname, name, mail, hash) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       await conn.query(
         "UPDATE Users SET firstname=?, name=?, mail=?, password=? WHERE id=?",
         [firstname, name, mail, hash, id]
@@ -94,7 +94,7 @@ class UserRepository {
   async deleteUser(id) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       await conn.query("DELETE FROM Users WHERE id=?", [id]);
     } catch (err) {
       console.log("repo delete user");

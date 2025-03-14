@@ -7,7 +7,7 @@ class CandidatureRepository {
     let conn;
     try {
       const id = v4();
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const [candidature] = await conn.query(
         "INSERT INTO Candidatures VALUES (?,?,?,DEFAULT) RETURNING *",
         [id, idUser, idMission]
@@ -22,7 +22,7 @@ class CandidatureRepository {
   async getCandidatureById(id) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const [candidature] = await conn.query(
         "SELECT * FROM Candidatures WHERE id=?",
         [id]
@@ -40,7 +40,7 @@ class CandidatureRepository {
   async getAllCandidatures() {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const candidatures = await conn.query("SELECT * FROM Candidatures");
       return candidatures;
     } catch (err) {
@@ -54,7 +54,7 @@ class CandidatureRepository {
   async updateState(id, state) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       await conn.query("UPDATE Candidatures SET state=? WHERE id=?", [
         state,
         id,
@@ -71,7 +71,7 @@ class CandidatureRepository {
   async deleteCandidature(id) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       await conn.query("DELETE FROM Candidatures WHERE id=?", [id]);
     } catch (err) {
       console.log("repo delete candidature");

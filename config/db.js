@@ -1,7 +1,7 @@
-import mariadb from "mariadb";
+import { Pool } from "pg";
 import "dotenv/config";
 
-const pool = mariadb.createPool({
+const pool = Pool({
   user: process.env.USER,
   host: process.env.HOST,
   database: process.env.DB,

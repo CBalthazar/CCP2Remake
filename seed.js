@@ -1,7 +1,7 @@
 import "dotenv/config";
-import mariadb from "mariadb";
+import Pool from "pg";
 
-const pool = mariadb.createPool({
+const pool = Pool({
   user: process.env.USER,
   host: process.env.HOST,
   database: process.env.DB,
@@ -11,8 +11,7 @@ const pool = mariadb.createPool({
 
 const seed = async () => {
   try {
-    const conn = await pool.getConnection();
-    await conn.beginTransaction();
+    const conn = await pool.connect();
     try {
       await conn.query(`
         DROP TABLE IF EXISTS Candidatures;
@@ -55,10 +54,8 @@ const seed = async () => {
         FOREIGN KEY (idUser) REFERENCES Users(id),
         FOREIGN KEY (idMission) REFERENCES Missions(id) 
         );`);
-      await conn.commit();
       console.log("DB seeded");
     } catch (err) {
-      await conn.rollback();
       throw err;
     }
   } catch (err) {

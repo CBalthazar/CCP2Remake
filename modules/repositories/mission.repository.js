@@ -7,7 +7,7 @@ class MissionRepository {
     const id = v4();
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const [mission] = await conn.query(
         "INSERT INTO Missions VALUES (?,?,?,?) RETURNING *",
         [id, title, description, idAssociation]
@@ -24,7 +24,7 @@ class MissionRepository {
   async getMissionById(id) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const [mission] = await conn.query("SELECT * FROM Missions WHERE id=?", [
         id,
       ]);
@@ -41,7 +41,7 @@ class MissionRepository {
   async getAllMissions() {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       const missions = await conn.query("SELECT * FROM Missions");
       return missions;
     } catch (err) {
@@ -55,7 +55,7 @@ class MissionRepository {
   async updateMission(id, title, description) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       await conn.query(
         "UPDATE Missions SET title=?, description=? WHERE id=?",
         [title, description, id]
@@ -72,7 +72,7 @@ class MissionRepository {
   async deleteMission(id) {
     let conn;
     try {
-      conn = await pool.getConnection();
+      conn = await pool.connect();
       await conn.query("DELETE FROM Missions WHERE id=?", [id]);
     } catch (err) {
       console.log("repo delete mission");
